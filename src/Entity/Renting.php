@@ -33,6 +33,11 @@ class Renting
     #[ORM\JoinColumn(nullable: false)]
     private ?Vehicle $vehicle = null;
 
+    public function __construct()
+    {
+        $this->registeredAt = new \DateTime();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -55,7 +60,7 @@ class Renting
         return $this->endedAt;
     }
 
-    public function setEndedAt(\DateTimeInterface $endedAt): self
+    public function setEndedAt(?\DateTimeInterface $endedAt): self
     {
         $this->endedAt = $endedAt;
 
@@ -67,7 +72,7 @@ class Renting
         return $this->totalPrice;
     }
 
-    public function setTotalPrice(float $totalPrice): self
+    public function setTotalPrice(?float $totalPrice): self
     {
         $this->totalPrice = $totalPrice;
 

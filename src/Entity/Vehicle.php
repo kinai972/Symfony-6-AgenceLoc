@@ -43,6 +43,7 @@ class Vehicle
     public function __construct()
     {
         $this->rentings = new ArrayCollection();
+        $this->registeredAt = new \DateTime();
     }
 
     public function getId(): ?int
