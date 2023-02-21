@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: VehicleRepository::class)]
 class Vehicle
@@ -17,18 +18,40 @@ class Vehicle
     private ?int $id = null;
 
     #[ORM\Column(length: 200)]
+    #[Assert\NotBlank(message: "Le nom du véhicule est obligatoire.")]
+    #[Assert\Length(
+        max: 200,
+        maxMessage: "Le nom du véhicule doit contenir {{ limit }} caractères maximum."
+    )]
     private ?string $name = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: "La marque du véhicule est obligatoire.")]
+    #[Assert\Length(
+        max: 50,
+        maxMessage: "La marque du véhicule doit contenir {{ limit }} caractères maximum."
+    )]
     private ?string $make = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: "Le modèle du véhicule est obligatoire.")]
+    #[Assert\Length(
+        max: 50,
+        maxMessage: "Le modèle du véhicule doit contenir {{ limit }} caractères maximum."
+    )]
     private ?string $model = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: "La description du véhicule est obligatoire.")]
+    #[Assert\Length(
+        min: 15,
+        minMessage: "La description du véhicule doit contenir {{ limit }} caractères maximum."
+    )]
     private ?string $description = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Le salaire de l'employé est obligatoire.")]
+    #[Assert\Positive(message: "Le prix journalier du véhicule doit être supérieur à 0.")]
     private ?float $dailyPrice = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]

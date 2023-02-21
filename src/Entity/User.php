@@ -9,6 +9,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -20,11 +21,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 180, unique: true)]
+    #[ORM\Column(length: 255, unique: true)]
+    #[Assert\NotBlank(message: "L'adresse électronique est obligatoire.")]
+    #[Assert\Email(message: "L'adresse électronique saisie n'est pas valide.")]
     private ?string $email = null;
 
     #[ORM\Column]
     private array $roles = [];
+
+    #[Assert\Length(
+        min: 5,
+        max: 25,
+        minMessage: "Le mot de passe doit contenir au moins {{ limit }} caractères.",
+        maxMessage: "Le mot de passe ne doit pas excéder {{ limit }} caractères.",
+    )]
+    #[Assert\NotBlank(message: "Le mot de passe est obligatoire", groups: ['password'])]
+    private ?string $plainPassword = null;
 
     /**
      * @var string The hashed password
@@ -33,15 +45,38 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 20)]
+    #[Assert\NotBlank(message: "Le pseudo est obligatoire.")]
+    #[Assert\Length(
+        min: 2,
+        minMessage: "Le pseudo doit contenir {{ limit }} caractères minimum.",
+        max: 20,
+        maxMessage: "Le pseudo doit contenir {{ limit }} caractères maximum."
+    )]
     private ?string $username = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: "Le nom est obligatoire.")]
+    #[Assert\Length(
+        min: 2,
+        minMessage: "Le nom doit contenir {{ limit }} caractères minimum.",
+        max: 50,
+        maxMessage: "Le nom doit contenir {{ limit }} caractères maximum."
+    )]
     private ?string $lastName = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: "Le prénom est obligatoire.")]
+    #[Assert\Length(
+        min: 2,
+        minMessage: "Le prénom doit contenir {{ limit }} caractères minimum.",
+        max: 50,
+        maxMessage: "Le prénom doit contenir {{ limit }} caractères maximum."
+    )]
     private ?string $firstName = null;
 
     #[ORM\Column(length: 10)]
+    #[Assert\NotBlank(message: "La civilité est obligatoire.")]
+    #[Assert\Choice(choices: self::GENDERS, message: 'Veuillez sélectionner une civilité.')]
     private ?string $gender = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
@@ -98,6 +133,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(string $plainPassword): self
+    {
+        $this->plainPassword = $plainPassword;
 
         return $this;
     }

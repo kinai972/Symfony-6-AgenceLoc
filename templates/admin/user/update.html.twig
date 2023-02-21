@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification d'un membre{% endblock %}
+
+{% block body %}
+    <h1>Modifier un membre</h1>
+
+    {{ include('admin/user/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+{% endblock %}

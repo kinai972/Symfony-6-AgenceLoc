@@ -37,7 +37,7 @@ class UserFixtures extends Fixture
                 ->setLastName($lastName)
                 ->setGender($gender)
                 ->setPassword(
-                    $this->hasher->hashPassword(user: $user, plainPassword: 1234)
+                    $this->hasher->hashPassword(user: $user, plainPassword: 12345)
                 );
 
             $manager->persist($user);

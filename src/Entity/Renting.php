@@ -15,10 +15,10 @@ class Renting
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $startedAt = null;
+    private ?\DateTimeInterface $startsAt = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $endedAt = null;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $endsAt = null;
 
     #[ORM\Column(nullable: true)]
     private ?float $totalPrice = null;
@@ -43,26 +43,26 @@ class Renting
         return $this->id;
     }
 
-    public function getStartedAt(): ?\DateTimeInterface
+    public function getStartsAt(): ?\DateTimeInterface
     {
-        return $this->startedAt;
+        return $this->startsAt;
     }
 
-    public function setStartedAt(\DateTimeInterface $startedAt): self
+    public function setStartsAt(\DateTimeInterface $startsAt): self
     {
-        $this->startedAt = $startedAt;
+        $this->startsAt = $startsAt;
 
         return $this;
     }
 
-    public function getEndedAt(): ?\DateTimeInterface
+    public function getEndsAt(): ?\DateTimeInterface
     {
-        return $this->endedAt;
+        return $this->endsAt;
     }
 
-    public function setEndedAt(?\DateTimeInterface $endedAt): self
+    public function setEndsAt(?\DateTimeInterface $endsAt): self
     {
-        $this->endedAt = $endedAt;
+        $this->endsAt = $endsAt;
 
         return $this;
     }
