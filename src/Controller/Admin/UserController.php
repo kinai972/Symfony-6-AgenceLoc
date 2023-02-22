@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
-use App\Form\UserType;
+use App\Form\Admin\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,13 +12,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route(path: '/admin/utilisateurs', name: 'app_admin_user_')]
+#[Route(path: '/admin/membres', name: 'app_admin_user_')]
 class UserController extends AbstractController
 {
     #[Route('/', name: 'index', methods: [Request::METHOD_GET])]
     public function index(UserRepository $repository): Response
     {
-        return $this->render('admin/user/index.html.twig', [
+        return $this->render(view: 'admin/user/index.html.twig', parameters: [
             'users' => $repository->findBy([], ['registeredAt' => 'DESC']),
         ]);
     }

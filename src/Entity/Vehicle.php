@@ -2,14 +2,17 @@
 
 namespace App\Entity;
 
-use App\Repository\VehicleRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\VehicleRepository;
+use Doctrine\Common\Collections\Collection;
+use Symfony\Component\HttpFoundation\File\File;
+use Doctrine\Common\Collections\ArrayCollection;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: VehicleRepository::class)]
+#[Vich\Uploadable]
 class Vehicle
 {
     #[ORM\Id]
@@ -18,12 +21,12 @@ class Vehicle
     private ?int $id = null;
 
     #[ORM\Column(length: 200)]
-    #[Assert\NotBlank(message: "Le nom du véhicule est obligatoire.")]
+    #[Assert\NotBlank(message: "Le titre du véhicule est obligatoire.")]
     #[Assert\Length(
         max: 200,
-        maxMessage: "Le nom du véhicule doit contenir {{ limit }} caractères maximum."
+        maxMessage: "Le titre du véhicule doit contenir {{ limit }} caractères maximum."
     )]
-    private ?string $name = null;
+    private ?string $title = null;
 
     #[ORM\Column(length: 50)]
     #[Assert\NotBlank(message: "La marque du véhicule est obligatoire.")]
@@ -60,8 +63,15 @@ class Vehicle
     #[ORM\Column(length: 200)]
     private ?string $image = null;
 
+    #[Assert\NotBlank(message: 'L\'image du véhicule est obligatoire.', groups: ['create'])]
+    #[Vich\UploadableField(mapping: 'vehicles', fileNameProperty: 'image')]
+    private ?File $imageFile = null;
+
     #[ORM\OneToMany(mappedBy: 'vehicle', targetEntity: Renting::class)]
     private Collection $rentings;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $updatedAt = null;
 
     public function __construct()
     {
@@ -69,19 +79,24 @@ class Vehicle
         $this->registeredAt = new \DateTime();
     }
 
+    public function __toString()
+    {
+        return $this->id . ' - ' . $this->title;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getTitle(): ?string
     {
-        return $this->name;
+        return $this->title;
     }
 
-    public function setName(string $name): self
+    public function setTitle(string $title): self
     {
-        $this->name = $name;
+        $this->title = $title;
 
         return $this;
     }
@@ -151,9 +166,25 @@ class Vehicle
         return $this->image;
     }
 
-    public function setImage(string $image): self
+    public function setImage(?string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(?File $imageFile = null): self
+    {
+        $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            $this->updatedAt = new \DateTime();
+        }
 
         return $this;
     }
@@ -184,6 +215,18 @@ class Vehicle
                 $renting->setVehicle(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

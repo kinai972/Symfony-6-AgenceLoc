@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BACKOFFICE | Véhicules{% endblock %}
+
+{% block body %}
+    <h1>Gestion des véhicules</h1>
+
+    {% include "shared/_flash.html.twig" %}
+
+    <a href="{{ path('app_admin_renting_create') }}" class="btn btn-primary"><i class="fa-solid fa-circle-plus"></i> Créer une commande</a>
+
+    <table class="table table-bordered table-striped text-center">
+        <thead>
+            <tr>
+                <th>Commande n°</th>
+                <th>Membre</th>
+                <th>Véhicule</th>
+                <th>Date et heure de départ</th>
+                <th>Date et heure de fin</th>
+                <th>Prix total</th>
+                <th>Date et heure d'enregistrement</th>
+                <th colspan="2">actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for renting in rentings %}
+            <tr>
+                <td>{{ renting.id }}</td>
+                <td>{{ renting.user }}</td>
+                <td>{{ renting.vehicleReference }}</td>
+                <td>{{ renting.startsAt|date('d/m/Y - H:i:s') }}</td>
+                <td>{{ renting.endsAt|date('d/m/Y - H:i:s') }}</td>
+                <td>{{ renting.totalPrice }} €</td>
+                <td>{{ renting.registeredAt|date('d/m/Y - H:i:s') }}</td>
+                <td>
+                    <a href="{{ path('app_admin_renting_update', {id: renting.id}) }}" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
+                </td>
+                <td>{{ include('admin/renting/_delete_form.html.twig') }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">Il n'y a actuellement aucune commande.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

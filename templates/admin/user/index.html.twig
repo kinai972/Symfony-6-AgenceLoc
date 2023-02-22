@@ -7,7 +7,7 @@
 
     {% include "shared/_flash.html.twig" %}
 
-    <a href="{{ path('app_admin_user_create') }}" class="btn btn-primary">Ajouter un membre</a>
+    <a href="{{ path('app_admin_user_create') }}" class="btn btn-primary"><i class="fa-solid fa-circle-plus"></i> Ajouter un membre</a>
 
     <table class="table table-bordered table-striped text-center">
         <thead>
@@ -31,10 +31,10 @@
                 <td>{{ user.lastName }}</td>
                 <td>{{ user.firstName }}</td>
                 <td>{{ user.email }}</td>
-                <td>{{ user.gender }}</td>
+                <td>{{ user.gender == 'm' ? 'Homme' : 'Femme' }}</td>
                 <td>
                     {% for role in user.roles %}
-                        <span class="badge text-bg-{{ role == 'ROLE_USER' ? 'success' : 'primary' }}">{{ role == 'ROLE_USER' ? 'membre' : 'admin' }}</span>
+                        <span class="badge text-bg-{{ role == 'ROLE_USER' ? 'success' : 'primary' }}">{{ role == 'ROLE_ADMIN' ? 'Admin' : 'Membre' }}</span>
                     {% endfor %}
                 </td>
                 <td>{{ user.registeredAt|date('d/m/Y à H:i:s') }}</td>
@@ -45,7 +45,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="10">no records found</td>
+                <td colspan="10">Il n'y a actuellement aucun utilisateur.</td>
             </tr>
         {% endfor %}
         </tbody>

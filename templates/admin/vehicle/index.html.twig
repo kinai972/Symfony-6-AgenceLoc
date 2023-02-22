@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BACKOFFICE | Véhicules{% endblock %}
+
+{% block body %}
+    <h1>Gestion des véhicules</h1>
+
+    {% include "shared/_flash.html.twig" %}
+
+    <a href="{{ path('app_admin_vehicle_create') }}" class="btn btn-primary"><i class="fa-solid fa-circle-plus"></i> Ajouter un véhicule</a>
+
+    <table class="table table-bordered table-striped text-center">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titre</th>
+                <th>Marque</th>
+                <th>Modèle</th>
+                <th>Description</th>
+                <th>Image</th>
+                <th>Prix</th>
+                <th>Date d'enregistrement</th>
+                <th colspan="2">actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for vehicle in vehicles %}
+            <tr>
+                <td>{{ vehicle.id }}</td>
+                <td>{{ vehicle.title }}</td>
+                <td>{{ vehicle.make }}</td>
+                <td>{{ vehicle.model }}</td>
+                <td>{{ vehicle.description }}</td>
+                <td><img src="{{ asset('images/vehicles/' ~ vehicle.image) }}" alt="{{ vehicle.title }}"></td>
+                <td>{{ vehicle.dailyPrice }} €</td>
+                <td>{{ vehicle.registeredAt|date('d/m/Y à H:i:s') }}</td>
+                <td>
+                    <a href="{{ path('app_admin_vehicle_update', {id: vehicle.id}) }}" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
+                </td>
+                <td>{{ include('admin/vehicle/_delete_form.html.twig') }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">Il n'y a actuellement aucun véhicule.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

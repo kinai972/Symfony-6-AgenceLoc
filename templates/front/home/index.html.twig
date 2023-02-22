@@ -1,0 +1,28 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    {% include "shared/_carousel.html.twig" %}
+
+    <h1 class="text-center my-5">Nos véhicules</h1>
+
+    {% for vehicle in vehicles %}
+        <div class="card mb-3">
+            <div class="row g-0">
+                <div class="col-md-6">
+                    <img src="{{ asset('images/vehicles/' ~ vehicle.image) }}" class="img-fluid rounded-start" alt="{{ vehicle.title }}">
+                </div>
+                <div class="col-md-6">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ vehicle.title }}</h5>
+                        <p class="card-text"><small class="text-muted">Marque : {{ vehicle.make }}</small></p>
+                        <p class="card-text"><small class="text-muted">Modèle : {{ vehicle.model }}</small></p>
+                        <p class="card-text"><strong class="text-muted">Prix journalier : {{ vehicle.dailyPrice }} €</strong></p>
+                        <p class="card-text">{{ vehicle.description }}</p>
+                        <a href="#" class="btn btn-primary">Réserver</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+{% endblock %}
