@@ -25,6 +25,10 @@ class UserFixtures extends Fixture
         $this->prepare(user: $admin, email: 'admin@mail.com', roles: ['ROLE_ADMIN']);
         $manager->persist($admin);
 
+        $user = new User();
+        $this->prepare(user: $admin, email: 'user@mail.com');
+        $manager->persist($user);
+
         for ($i = 1; $i <= 7; $i++) {
             $user = new User();
 
