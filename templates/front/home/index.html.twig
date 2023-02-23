@@ -1,9 +1,11 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
+    <h1 class="text-center mt-2 mb-4">AGENCELOC | Location de véhicules</h1>
+
     {% include "shared/_carousel.html.twig" %}
 
-    <h1 class="text-center my-5">Nos véhicules</h1>
+    <h2 class="mt-5 mb-3">Nos véhicules</h2>
 
     {% for vehicle in vehicles %}
         <div class="card mb-3">
@@ -18,7 +20,7 @@
                         <p class="card-text"><small class="text-muted">Modèle : {{ vehicle.model }}</small></p>
                         <p class="card-text"><strong class="text-muted">Prix journalier : {{ vehicle.dailyPrice }} €</strong></p>
                         <p class="card-text">{{ vehicle.description }}</p>
-                        <a href="#" class="btn btn-primary">Réserver</a>
+                        <a href="{{ path('app_front_renting_create', {id: vehicle.id}) }}" class="btn btn-primary">Réserver</a>
                     </div>
                 </div>
             </div>

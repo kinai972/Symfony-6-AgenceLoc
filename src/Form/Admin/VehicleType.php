@@ -46,7 +46,7 @@ class VehicleType extends AbstractType
                 ]
             ])
             ->add('imageFile', VichImageType::class, [
-                'required' => false,
+                'required' => in_array('create', $options['validation_groups'] ?? []),
                 'allow_delete' => false,
                 'label' => "Image du véhicule",
             ]);

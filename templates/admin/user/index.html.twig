@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}BACKOFFICE | Membres{% endblock %}
+{% block title %}BACKOFFICE | Gestion des membres{% endblock %}
 
 {% block body %}
-    <h1>Gestion des membres</h1>
+    <h1>BACKOFFICE | Gestion des membres</h1>
 
     {% include "shared/_flash.html.twig" %}
 
@@ -41,7 +41,13 @@
                 <td>
                     <a href="{{ path('app_admin_user_update', {'id': user.id}) }}" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
                 </td>
-                <td>{{ include('admin/user/_delete_form.html.twig') }}</td>
+                <td>
+                    {{ include('shared/_delete_form.html.twig', {
+                        route: "app_admin_user_delete",
+                        name: "ce membre",
+                        data: user
+                    }) }}
+                </td>
             </tr>
         {% else %}
             <tr>

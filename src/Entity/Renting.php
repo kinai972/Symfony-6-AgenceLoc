@@ -22,7 +22,16 @@ class Renting
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Assert\NotBlank(message: "La date et l'heure de début de la location sont obligatoires.")]
-    #[Assert\GreaterThanOrEqual(value: self::STARTED_AT['default'], message: "Veuillez choisir une date de départ postérieure au " . self::STARTED_AT['fr'] . ".")]
+    #[Assert\GreaterThanOrEqual(
+        value: self::STARTED_AT['default'],
+        message: "Veuillez choisir une date de départ postérieure au " . self::STARTED_AT['fr'] . ".",
+        groups: ['admin']
+    )]
+    #[Assert\GreaterThanOrEqual(
+        value: 'now',
+        message: "Veuillez choisir une date de départ postérieure à l'instant présent.",
+        groups: ['user']
+    )]
     private ?\DateTimeInterface $startsAt = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
@@ -31,7 +40,7 @@ class Renting
     private ?\DateTimeInterface $endsAt = null;
 
     #[ORM\Column()]
-    #[Assert\NotBlank(message: "Le prix total de la location est obligatoire.")]
+    #[Assert\NotBlank(message: "Le prix total de la location est obligatoire.", groups: ['admin'])]
     private ?float $totalPrice = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]

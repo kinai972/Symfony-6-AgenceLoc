@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}BACKOFFICE | Véhicules{% endblock %}
+{% block title %}BACKOFFICE | Gestion des véhicules{% endblock %}
 
 {% block body %}
-    <h1>Gestion des véhicules</h1>
+    <h1 class="text-center">BACKOFFICE | Gestion des véhicules</h1>
 
     {% include "shared/_flash.html.twig" %}
 
@@ -37,7 +37,13 @@
                 <td>
                     <a href="{{ path('app_admin_vehicle_update', {id: vehicle.id}) }}" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
                 </td>
-                <td>{{ include('admin/vehicle/_delete_form.html.twig') }}</td>
+                <td>
+                    {{ include('shared/_delete_form.html.twig', {
+                        route: "app_admin_vehicle_delete",
+                        name: "ce véhicule",
+                        data: vehicle
+                    }) }}
+                </td>
             </tr>
         {% else %}
             <tr>

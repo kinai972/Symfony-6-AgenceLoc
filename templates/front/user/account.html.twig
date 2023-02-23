@@ -1,0 +1,57 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    Mon compte
+{% endblock %}
+
+{% block body %}
+    <h1 class="mb-3">Bienvenue sur votre compte</h1>
+
+    <a href="{{ path('app_front_user_logout') }}" class="btn btn-warning d-block ms-auto mb-3" style="width: fit-content;">
+        <i class="fa-solid fa-door-open"></i>
+        Se déconnecter
+    </a>
+
+    {% include "shared/_flash.html.twig" %}
+
+    <div class="card" style="max-width: 300px;">
+        <h5 class="card-header">{{ user.username }}</h5>
+        <div class="card-body">
+            <h5 class="card-title">{{ user.firstName }} {{ user.lastName }}</h5>
+            <p class="card-text">{{ user.email }}</p>
+            <p class="card-text">Inscrit depuis le {{ user.registeredAt | date('d/m/Y à H:i:s') }}</p>
+            <a href="{{ path('app_front_user_update') }}" class="btn btn-primary d-block"><i class="fa-solid fa-pen-to-square"></i> Modifier</a>
+        </div>
+    </div>
+
+    <h2 class="mt-4 mb-2">Mes commandes {{ user.rentings|length ? '(' ~ user.rentings|length ~ ')' }}</h2>
+
+    <table class="table table-bordered table-striped text-center">
+        <thead>
+            <tr>
+                <th>Commande n°</th>
+                <th>Véhicule</th>
+                <th>Date et heure de départ</th>
+                <th>Date et heure de fin</th>
+                <th>Prix total</th>
+                <th>Commande passée le</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for renting in rentings %}
+            <tr>
+                <td>{{ renting.id }}</td>
+                <td>{{ renting.vehicleReference }}</td>
+                <td>{{ renting.startsAt|date('d/m/Y - H:i:s') }}</td>
+                <td>{{ renting.endsAt|date('d/m/Y - H:i:s') }}</td>
+                <td>{{ renting.totalPrice }} €</td>
+                <td>{{ renting.registeredAt|date('d/m/Y - H:i:s') }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">Vous n'avez passé aucune commande.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

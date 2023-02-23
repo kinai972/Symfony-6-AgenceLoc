@@ -26,7 +26,7 @@ class RentingController extends AbstractController
     public function create(Request $request, EntityManagerInterface $manager): Response
     {
         $form = $this->createForm(type: RentingType::class, data: $renting = new Renting(), options: [
-            'validation_groups' => ['Default', 'create']
+            'validation_groups' => ['Default', 'admin']
         ])->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -51,7 +51,9 @@ class RentingController extends AbstractController
     #[Route('/{id}/modifier', name: 'update', methods: [Request::METHOD_GET, Request::METHOD_POST])]
     public function update(Renting $renting, Request $request, EntityManagerInterface $manager): Response
     {
-        $form = $this->createForm(type: RentingType::class, data: $renting)
+        $form = $this->createForm(type: RentingType::class, data: $renting, options: [
+            'validation_groups' => ['Default', 'admin']
+        ])
             ->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

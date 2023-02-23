@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}BACKOFFICE | Véhicules{% endblock %}
+{% block title %}BACKOFFICE | Gestion des commandes{% endblock %}
 
 {% block body %}
-    <h1>Gestion des véhicules</h1>
+    <h1 class="text-center">BACKOFFICE | Gestion des commandes</h1>
 
     {% include "shared/_flash.html.twig" %}
 
@@ -26,7 +26,13 @@
         {% for renting in rentings %}
             <tr>
                 <td>{{ renting.id }}</td>
-                <td>{{ renting.user }}</td>
+                <td>
+                    {% if renting.user %}
+                        {{ renting.user }}
+                    {% else %}
+                        <span class="badge text-bg-warning">Compte membre supprimé</span>
+                    {% endif %}
+                </td>
                 <td>{{ renting.vehicleReference }}</td>
                 <td>{{ renting.startsAt|date('d/m/Y - H:i:s') }}</td>
                 <td>{{ renting.endsAt|date('d/m/Y - H:i:s') }}</td>
@@ -35,7 +41,13 @@
                 <td>
                     <a href="{{ path('app_admin_renting_update', {id: renting.id}) }}" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
                 </td>
-                <td>{{ include('admin/renting/_delete_form.html.twig') }}</td>
+                <td>
+                    {{ include('shared/_delete_form.html.twig', {
+                        route: "app_admin_renting_delete",
+                        name: "cette commande",
+                        data: renting
+                    }) }}
+                </td>
             </tr>
         {% else %}
             <tr>

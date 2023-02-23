@@ -1,0 +1,42 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    Réserver un véhicule
+{% endblock %}
+
+{% block body %}
+    <h1>Réserver un véhicule</h1>
+
+    <div class="row d-flex align-items-start justify-content-around gap-4">
+        <div class="card mb-4 col-md-5" style="width: 24rem;">
+            <img src="{{ asset('images/vehicles/' ~ vehicle.image) }}" alt="{{ vehicle.title }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ vehicle.title }}</h5>
+                <p class="card-text">{{ vehicle.description }}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Marque : {{ vehicle.title }}</li>
+                <li class="list-group-item">Modèle : {{ vehicle.model }}</li>
+                <li class="list-group-item">Prix journalier : {{ vehicle.dailyPrice }} €</li>
+            </ul>
+        </div>
+
+        <div class="card mb-3 col-md-3" style="width: 18rem;">
+            <div class="card-header">
+                Tranche de prix
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Moins d'un semaine : {{ vehicle.dailyPrice * 2 }} €</li>
+                <li class="list-group-item">Entre une semaine et un mois : {{ vehicle.dailyPrice * 10 }} €</li>
+                <li class="list-group-item">Entre un mois et un semestre : {{ vehicle.dailyPrice * 40 }} €</li>
+                <li class="list-group-item">Entre un semestre et un an : {{ vehicle.dailyPrice * 65 }} €</li>
+                <li class="list-group-item">Plus d'un an : {{ vehicle.dailyPrice * 100 }} €</li>
+            </ul>
+        </div>
+    </div>
+
+
+    {% include "shared/_form.html.twig" with {
+        button_label: "Réserver"
+    } %}
+{% endblock %}

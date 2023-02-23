@@ -9,22 +9,30 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{{ path('app_front_home_index') }}">Accueil</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Inscription</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Connexion</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fa-solid fa-gears"></i> BackOffice
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{{ path('app_admin_user_index') }}"><i class="fa-solid fa-user-group"></i> Membres</a></li>
-            <li><a class="dropdown-item" href="{{ path('app_admin_vehicle_index') }}"><i class="fa-solid fa-car"></i> Véhicules</a></li>
-            <li><a class="dropdown-item" href="{{ path('app_admin_renting_index') }}"><i class="fa-solid fa-money-check"></i> Commandes</a></li>
-          </ul>
-        </li>
+        {% if is_granted('ROLE_USER') %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_front_user_account') }}">Mon compte</a>
+          </li>
+          {% if is_granted('ROLE_ADMIN') %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa-solid fa-gears"></i> BackOffice
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{ path('app_admin_user_index') }}"><i class="fa-solid fa-user-group"></i> Membres</a></li>
+                <li><a class="dropdown-item" href="{{ path('app_admin_vehicle_index') }}"><i class="fa-solid fa-car"></i> Véhicules</a></li>
+                <li><a class="dropdown-item" href="{{ path('app_admin_renting_index') }}"><i class="fa-solid fa-money-check"></i> Commandes</a></li>
+              </ul>
+            </li>
+          {% endif %}
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_front_user_signup') }}">Inscription</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_front_user_login') }}">Connexion</a>
+          </li>
+        {% endif %}
       </ul>
     </div>
   </div>

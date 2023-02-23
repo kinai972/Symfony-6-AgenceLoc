@@ -1,4 +1,0 @@
-<form method="post" action="{{ path('app_admin_vehicle_delete', {'id': vehicle.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer définitivement ce véhicule ?');">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ vehicle.id) }}">
-    <button class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></button>
-</form>

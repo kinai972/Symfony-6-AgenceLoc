@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form\Admin;
+namespace App\Form\Front;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
@@ -10,7 +10,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\Extension\Core\Type\DateIntervalType;
 
 class UserType extends AbstractType
 {
@@ -18,43 +17,31 @@ class UserType extends AbstractType
     {
         $builder
             ->add(child: 'email', type: TextType::class, options: [
-                'label' => "Adresse électronique du membre :",
+                'label' => "Adresse électronique :",
                 'attr' => [
-                    'placeholder' => "Saisir l'adresse électronique du membre",
+                    'placeholder' => "Saisir l'adresse électronique",
                 ]
             ])
             ->add(child: 'username', type: TextType::class, options: [
-                'label' => "Pseudo du membre :",
+                'label' => "Pseudo :",
                 'attr' => [
-                    'placeholder' => "Saisir le pseudo du membre",
+                    'placeholder' => "Saisir le pseudo",
                 ]
             ])
-            // ->add('username', DateIntervalType::class, [
-            //     'widget' => 'choice',
-            //     'label' => 'Temps de préparation',
-            //     'with_years' => false,
-            //     'with_months' => false,
-            //     'with_days' => false,
-            //     'with_hours' => true,
-            //     'with_minutes' => true,
-            //     'with_seconds' => false,
-            //     'input' => 'interval',
-            //     'required' => true,
-            // ])
             ->add(child: 'firstName', type: TextType::class, options: [
-                'label' => "Prénom du membre :",
+                'label' => "Prénom :",
                 'attr' => [
-                    'placeholder' => "Saisir le prénom du membre",
+                    'placeholder' => "Saisir le prénom",
                 ]
             ])
             ->add(child: 'lastName', type: TextType::class, options: [
-                'label' => "Nom du membre :",
+                'label' => "Nom :",
                 'attr' => [
-                    'placeholder' => "Saisir le nom du membre",
+                    'placeholder' => "Saisir le nom",
                 ]
             ])
             ->add(child: 'gender', type: ChoiceType::class, options: [
-                'label' => "Statut du membre :",
+                'label' => "Statut :",
                 'choices' => [
                     'Homme' => 'm',
                     'Femme' => 'f',
@@ -72,15 +59,6 @@ class UserType extends AbstractType
                 ],
                 'invalid_message' => 'Les mots de passe ne sont pas identiques.',
                 'required' => in_array('password', $options['validation_groups'] ?? []),
-            ])
-            ->add(child: 'roles', type: ChoiceType::class, options: [
-                'label' => "Statut du membre :",
-                'choices' => [
-                    'Membre' => 'ROLE_USER',
-                    'Administrateur' => 'ROLE_ADMIN',
-                ],
-                'multiple' => true,
-                'expanded' => true,
             ]);
     }
 

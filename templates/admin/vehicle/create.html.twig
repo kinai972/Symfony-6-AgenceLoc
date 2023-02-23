@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ajout d'un membre{% endblock %}
+{% block title %}BACKOFFICE | Ajout d'un véhicule{% endblock %}
 
 {% block body %}
-    <h1>Ajouter un membre</h1>
+    <h1 class="text-center">BACKOFFICE | Ajouter un véhicule</h1>
 
-    {{ include('admin/user/_form.html.twig') }}
+    {{ include('shared/_form.html.twig', {button_label: "Ajouter"}) }}
 {% endblock %}

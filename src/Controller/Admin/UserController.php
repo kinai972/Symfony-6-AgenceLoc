@@ -52,14 +52,6 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'read', methods: [Request::METHOD_GET])]
-    public function read(User $user): Response
-    {
-        return $this->render('admin/user/read.html.twig', [
-            'user' => $user,
-        ]);
-    }
-
     #[Route('/{id}/modifier', name: 'update', methods: [Request::METHOD_GET, Request::METHOD_POST])]
     public function update(Request $request, User $user, UserPasswordHasherInterface $hasher, EntityManagerInterface $manager): Response
     {

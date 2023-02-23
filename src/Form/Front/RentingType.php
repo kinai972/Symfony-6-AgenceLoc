@@ -1,13 +1,10 @@
 <?php
 
-namespace App\Form\Admin;
+namespace App\Form\Front;
 
 use App\Entity\Renting;
-use App\Entity\User;
-use App\Entity\Vehicle;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -24,14 +21,7 @@ class RentingType extends AbstractType
                     'hour' => 'Heure', 'minute' => 'Minute', 'second' => 'Seconde',
                 ],
                 // 'widget' => 'choice',
-                'years' => range(2022, 2024),
-                // 'attr' => [
-                //     'placeholder' => "Exemple : 23/08/2023 08:03",
-                // ],
-                // 'years' => range(2022, 2024),
-                // 'html5' => false,
-                // 'widget' => 'single_text',
-                // 'format' => 'dd/MM/yyyy h:i',
+                'years' => range(2023, 2024),
             ])
             ->add(child: 'endsAt', type: DateTimeType::class, options: [
                 'label' => "Date et Heure de fin",
@@ -40,21 +30,7 @@ class RentingType extends AbstractType
                     'hour' => 'Heure', 'minute' => 'Minute', 'second' => 'Seconde',
                 ],
                 // 'widget' => 'choice',
-                'years' => range(2022, 2024),
-            ])
-            ->add(child: 'totalPrice', type: MoneyType::class, options: [
-                'label' => "Prix total de la location",
-                'attr' => [
-                    'placeholder' => "Saisir le prix total de la location",
-                ]
-            ])
-            ->add('user', EntityType::class, [
-                'label' => "Membre",
-                'class' => User::class,
-            ])
-            ->add('vehicle', EntityType::class, [
-                'label' => "Véhicule à louer",
-                'class' => Vehicle::class,
+                'years' => range(2023, 2024),
             ]);
     }
 
