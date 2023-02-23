@@ -42,9 +42,9 @@
             <tr>
                 <td>{{ renting.id }}</td>
                 <td>{{ renting.vehicleReference }}</td>
-                <td>{{ renting.startsAt|date('d/m/Y - H:i:s') }}</td>
-                <td>{{ renting.endsAt|date('d/m/Y - H:i:s') }}</td>
-                <td>{{ renting.totalPrice }} €</td>
+                <td>{{ renting.startsAt|date('d/m/Y') }}</td>
+                <td>{{ renting.endsAt|date('d/m/Y') }}</td>
+                <td>{{ renting.totalPrice|number_format(2, ',', ' ') }} €</td>
                 <td>{{ renting.registeredAt|date('d/m/Y - H:i:s') }}</td>
             </tr>
         {% else %}

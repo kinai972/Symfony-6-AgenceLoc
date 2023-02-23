@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route(path: '/admin/membres', name: 'app_admin_user_')]
+#[Route(path: '/admin/membres', name: 'app_admin_user_', requirements: ['id' => '\d+'])]
 class UserController extends AbstractController
 {
     #[Route('/', name: 'index', methods: [Request::METHOD_GET])]
@@ -24,8 +24,11 @@ class UserController extends AbstractController
     }
 
     #[Route('/ajouter', name: 'create', methods: [Request::METHOD_GET, Request::METHOD_POST])]
-    public function create(Request $request, UserPasswordHasherInterface $hasher, EntityManagerInterface $manager): Response
-    {
+    public function create(
+        Request $request,
+        UserPasswordHasherInterface $hasher,
+        EntityManagerInterface $manager
+    ): Response {
         $form = $this->createForm(type: UserType::class, data: $user = new User(), options: [
             'validation_groups' => ['Default', 'password']
         ])->handleRequest($request);
@@ -41,7 +44,10 @@ class UserController extends AbstractController
             $manager->persist($user);
             $manager->flush();
 
-            $this->addFlash(type: 'success', message: "Le membre {$user->getUsername()} a été ajouté avec succès.");
+            $this->addFlash(
+                type: 'success',
+                message: "Le membre {$user->getUsername()} a été ajouté avec succès."
+            );
 
             return $this->redirectToRoute(route: 'app_admin_user_index');
         }
@@ -53,8 +59,12 @@ class UserController extends AbstractController
     }
 
     #[Route('/{id}/modifier', name: 'update', methods: [Request::METHOD_GET, Request::METHOD_POST])]
-    public function update(Request $request, User $user, UserPasswordHasherInterface $hasher, EntityManagerInterface $manager): Response
-    {
+    public function update(
+        Request $request,
+        User $user,
+        UserPasswordHasherInterface $hasher,
+        EntityManagerInterface $manager
+    ): Response {
         $form = $this->createForm(type: UserType::class, data: $user)
             ->handleRequest($request);
 

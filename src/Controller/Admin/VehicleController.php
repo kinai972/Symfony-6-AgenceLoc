@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[Route(path: '/admin/vehicules', name: 'app_admin_vehicle_')]
+#[Route(path: '/admin/vehicules', name: 'app_admin_vehicle_', requirements: ['id' => '\d+'])]
 class VehicleController extends AbstractController
 {
     #[Route('/', name: 'index', methods: [Request::METHOD_GET])]

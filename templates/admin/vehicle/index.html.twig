@@ -32,7 +32,7 @@
                 <td>{{ vehicle.model }}</td>
                 <td>{{ vehicle.description }}</td>
                 <td><img src="{{ asset('images/vehicles/' ~ vehicle.image) }}" alt="{{ vehicle.title }}"></td>
-                <td>{{ vehicle.dailyPrice }} €</td>
+                <td>{{ vehicle.dailyPrice|number_format(2, ',', ' ') }} €</td>
                 <td>{{ vehicle.registeredAt|date('d/m/Y à H:i:s') }}</td>
                 <td>
                     <a href="{{ path('app_admin_vehicle_update', {id: vehicle.id}) }}" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>

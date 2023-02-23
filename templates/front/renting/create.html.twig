@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Réserver un véhicule</h1>
+    <h1 class="text-center mb-3">Réserver un véhicule</h1>
 
     <div class="row d-flex align-items-start justify-content-around gap-4">
         <div class="card mb-4 col-md-5" style="width: 24rem;">
@@ -17,26 +17,27 @@
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">Marque : {{ vehicle.title }}</li>
                 <li class="list-group-item">Modèle : {{ vehicle.model }}</li>
-                <li class="list-group-item">Prix journalier : {{ vehicle.dailyPrice }} €</li>
+                <li class="list-group-item">Prix journalier : {{ vehicle.dailyPrice|number_format(2, ',', ' ') }} €</li>
             </ul>
         </div>
 
-        <div class="card mb-3 col-md-3" style="width: 18rem;">
+        {% include "shared/_form.html.twig" with {
+            class: 'col-md-3',
+            button_label: "Réserver"
+        } %}
+
+        <div class="card mb-3 col-md-3 text-center">
             <div class="card-header">
-                Tranche de prix
+                Moyenne de prix
             </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">Moins d'un semaine : {{ vehicle.dailyPrice * 2 }} €</li>
-                <li class="list-group-item">Entre une semaine et un mois : {{ vehicle.dailyPrice * 10 }} €</li>
-                <li class="list-group-item">Entre un mois et un semestre : {{ vehicle.dailyPrice * 40 }} €</li>
-                <li class="list-group-item">Entre un semestre et un an : {{ vehicle.dailyPrice * 65 }} €</li>
-                <li class="list-group-item">Plus d'un an : {{ vehicle.dailyPrice * 100 }} €</li>
+                <li class="list-group-item">Pour une semaine : ~ {{ (vehicle.dailyPrice * 7)|number_format(2, ',', ' ') }} €</li>
+                <li class="list-group-item">Pour un mois : ~ {{ (vehicle.dailyPrice * 30)|number_format(2, ',', ' ') }} €</li>
+                <li class="list-group-item">Pour un semestre : ~ {{ (vehicle.dailyPrice * 30 * 6)|number_format(2, ',', ' ') }} €</li>
+                <li class="list-group-item">Pour un an : ~ {{ (vehicle.dailyPrice * 30 * 6 * 12)|number_format(2, ',', ' ') }} €</li>
             </ul>
         </div>
     </div>
 
 
-    {% include "shared/_form.html.twig" with {
-        button_label: "Réserver"
-    } %}
 {% endblock %}

@@ -20,10 +20,9 @@ class RentingFixtures extends Fixture implements DependentFixtureInterface
             /** @var Vehicle */
             $vehicle = $this->getReference(name: 'vehicle-' . rand(1, 7));
 
-            $renting->setStartsAt(
-                $faker->dateTimeBetween(startDate: '-11 months', endDate: '-6 months')
-            )
-                ->setEndsAt($faker->dateTimeBetween(startDate: '-5 months', endDate: '+2 months'))
+            $renting
+                ->setStartsAt($faker->dateTimeBetween(startDate: '-11 months', endDate: '-6 months'))
+                ->setEndsAt($faker->dateTimeBetween(startDate: '-5 months', endDate: '+4 months'))
                 ->setTotalPrice($faker->randomFloat(nbMaxDecimals: 2, min: 15000, max: 50000))
                 ->setUser($this->getReference(name: 'user-' . rand(1, 7)))
                 ->setVehicle($this->getReference(name: 'vehicle-' . rand(1, 7)))

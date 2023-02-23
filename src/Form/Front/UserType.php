@@ -41,7 +41,7 @@ class UserType extends AbstractType
                 ]
             ])
             ->add(child: 'gender', type: ChoiceType::class, options: [
-                'label' => "Statut :",
+                'label' => "Civilité :",
                 'choices' => [
                     'Homme' => 'm',
                     'Femme' => 'f',
@@ -53,9 +53,15 @@ class UserType extends AbstractType
                 'type' => PasswordType::class,
                 'first_options' => [
                     'label' => 'Mot de passe :',
+                    'attr' => [
+                        'placeholder' => "Saisir le mot de passe",
+                    ]
                 ],
                 'second_options' => [
                     'label' => 'Confirmation du mot de passe :',
+                    'attr' => [
+                        'placeholder' => "Confirmer le mot de passe",
+                    ]
                 ],
                 'invalid_message' => 'Les mots de passe ne sont pas identiques.',
                 'required' => in_array('password', $options['validation_groups'] ?? []),

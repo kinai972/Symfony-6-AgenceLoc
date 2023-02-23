@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[Route(path: '/admin/commandes', name: 'app_admin_renting_')]
+#[Route(path: '/admin/commandes', name: 'app_admin_renting_', requirements: ['id' => '\d+'])]
 class RentingController extends AbstractController
 {
     #[Route('/', name: 'index', methods: [Request::METHOD_GET])]

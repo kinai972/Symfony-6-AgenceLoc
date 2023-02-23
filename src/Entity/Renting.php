@@ -20,23 +20,26 @@ class Renting
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Assert\NotBlank(message: "La date et l'heure de début de la location sont obligatoires.")]
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\NotBlank(message: "La date de début de la location est obligatoire.")]
     #[Assert\GreaterThanOrEqual(
         value: self::STARTED_AT['default'],
         message: "Veuillez choisir une date de départ postérieure au " . self::STARTED_AT['fr'] . ".",
         groups: ['admin']
     )]
     #[Assert\GreaterThanOrEqual(
-        value: 'now',
-        message: "Veuillez choisir une date de départ postérieure à l'instant présent.",
+        value: '+1 day',
+        message: "Veuillez choisir une date de départ postérieure d'au moins 24 heures.",
         groups: ['user']
     )]
     private ?\DateTimeInterface $startsAt = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Assert\NotBlank(message: "La date et l'heure de fin de la location sont obligatoires.")]
-    #[Assert\GreaterThan(propertyPath: 'startsAt', message: "La date et l'heure de fin de la location doivent être postérieures à la date et à l'heure de départ.")]
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\NotBlank(message: "La date de fin de la location est obligatoire.")]
+    #[Assert\GreaterThan(
+        propertyPath: 'startsAt',
+        message: "La date et l'heure de fin de la location doivent être postérieures à la date et à l'heure de départ."
+    )]
     private ?\DateTimeInterface $endsAt = null;
 
     #[ORM\Column()]

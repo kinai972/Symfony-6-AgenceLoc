@@ -15,6 +15,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 
+#[Route(requirements: ['id' => '\d+'])]
 class UserController extends AbstractController
 {
     #[Route(path: '/connexion', name: 'app_front_user_login')]

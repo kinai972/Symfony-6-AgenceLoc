@@ -13,6 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[IsGranted('ROLE_USER')]
+#[Route(requirements: ['id' => '\d+'])]
 class RentingController extends AbstractController
 {
     #[Route(
@@ -27,7 +28,13 @@ class RentingController extends AbstractController
         ])->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $renting->setTotalPrice($vehicle->getDailyPrice() * rand(2, 100));
+            $rentingDuration =
+                $renting
+                ->getStartsAt()
+                ->diff($renting->getEndsAt())
+                ->days;
+
+            $renting->setTotalPrice($vehicle->getDailyPrice() * $rentingDuration);
             $renting->setVehicleReference(
                 $vehicle->getId() . ' - ' . $vehicle->getTitle()
             );

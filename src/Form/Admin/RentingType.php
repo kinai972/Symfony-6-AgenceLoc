@@ -10,37 +10,20 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class RentingType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add(child: 'startsAt', type: DateTimeType::class, options: [
-                'label' => "Date et Heure de départ",
-                'placeholder' => [
-                    'year' => 'Année', 'month' => 'Mois', 'day' => 'Jour',
-                    'hour' => 'Heure', 'minute' => 'Minute', 'second' => 'Seconde',
-                ],
-                // 'widget' => 'choice',
-                'years' => range(2022, 2024),
-                // 'attr' => [
-                //     'placeholder' => "Exemple : 23/08/2023 08:03",
-                // ],
-                // 'years' => range(2022, 2024),
-                // 'html5' => false,
-                // 'widget' => 'single_text',
-                // 'format' => 'dd/MM/yyyy h:i',
+            ->add(child: 'startsAt', type: DateType::class, options: [
+                'label' => "Date de départ",
+                'widget' => 'single_text',
             ])
-            ->add(child: 'endsAt', type: DateTimeType::class, options: [
-                'label' => "Date et Heure de fin",
-                'placeholder' => [
-                    'year' => 'Année', 'month' => 'Mois', 'day' => 'Jour',
-                    'hour' => 'Heure', 'minute' => 'Minute', 'second' => 'Seconde',
-                ],
-                // 'widget' => 'choice',
-                'years' => range(2022, 2024),
+            ->add(child: 'endsAt', type: DateType::class, options: [
+                'label' => "Date de départ",
+                'widget' => 'single_text',
             ])
             ->add(child: 'totalPrice', type: MoneyType::class, options: [
                 'label' => "Prix total de la location",
