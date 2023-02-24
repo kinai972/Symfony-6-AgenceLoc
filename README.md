@@ -67,7 +67,7 @@ Ou alors :
 ## Documentations utiles
 
 - [FakerPHP](https://fakerphp.github.io/)
-- [VichUploader](https://fakerphp.github.io/)
+- [VichUploader](https://github.com/dustin10/VichUploaderBundle)
 ## Accès
 
 **Admin**
